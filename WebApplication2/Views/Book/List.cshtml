@@ -1,10 +1,103 @@
-﻿@model WebApplication2.Models.BookModel
+﻿@model WebApplication2.ViewModel.BookListVM
 
-@{ 
-    Layout = null;
-}
 
-<ul>
-    Judul Buku
-    <li>@Model.Judul</li>
-</ul>
+<h2>Judul Buku</h2>
+
+
+<button id="btn-create-book" class="btn btn-primary">Get Book</button>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+
+    <tbody id="table-book">
+
+        @*@foreach (var item in Model.listBooks)
+        {
+            <tr>
+                <td>@item.BookID</td>
+                <td>@item.Judul</td>
+                <td>@item.Author</td>
+                <td>
+                    <a href="/Book/DeleteBook?BookID=@item.BookID">Delete</a>
+                    <a href="/Book/UpdateBook?BookID=@item.BookID">Update</a>
+                </td>
+            </tr>
+        }*@
+
+    </tbody>
+
+
+</table>
+
+
+
+
+
+
+
+
+<h2>Judul Film</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Actor</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model.listMovies)
+        {
+            <tr>
+                <td>@item.MovieID</td>
+                <td>@item.Title</td>
+                <td>@item.Actor</td>
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+    $("#btn-create-book").on('click', function () {
+        $.ajax({
+            url: '/Book/GetAllBooks',
+            method: 'GET',
+            success: function (response) {
+
+                console.log(response)
+                response.forEach(e => {
+                    //$("#table-book").html()
+
+                    document.getElementById("table-book").innerHTML +=
+                        `
+                    <tr>
+                        <td>${e.BookID}</td>
+                        <td>${e.Judul}</td>
+                        <td>${e.Author}</td>
+                        <td>
+                            <a href="/Book/DeleteBook?BookID=${e.BookID}">Delete</a>
+                            <a href="/Book/UpdateBook?BookID=${e.BookID}">Update</a>
+                        </td>
+                    </tr>
+                    `
+
+                })
+            }
+        })       
+    })
+</script>

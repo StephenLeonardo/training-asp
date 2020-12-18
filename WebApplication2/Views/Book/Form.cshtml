@@ -1,0 +1,29 @@
+﻿@model WebApplication2.Models.BookModel
+
+@{
+    ViewBag.Title = "Form";
+}
+
+
+
+@*<input type="number" name="BookID" value="" />
+    <input type="text" name="Judul" value="" />
+    <input type="text" name="Author" value="" />*@
+
+    <form action="/Book/SubmitForm" method="POST">
+        <div class="form-group">
+            <label for="book1">Book ID</label>
+            <input type="text" class="form-control" id="book1" name="BookID">
+        </div>
+        <div class="form-group">
+            <label for="judul1">Judul</label>
+            <input type="text" class="form-control" id="judul1" name="Judul">
+        </div>
+        <div class="form-group">
+            <label for="author1">Author</label>
+            <input type="text" class="form-control" id="author1" name="Author">
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
