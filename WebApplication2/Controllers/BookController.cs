@@ -71,9 +71,11 @@ namespace WebApplication2.Controllers
             return View();
         }
 
-        public JsonResult GetAllBooks()
+        public ActionResult GetAllBooks()
         {
-            return Json(listBooks);
+            JsonResult RetData = Json(listBooks);
+            RetData.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return RetData;
         }
 
 
