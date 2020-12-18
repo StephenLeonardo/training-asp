@@ -74,7 +74,7 @@ namespace WebApplication2.Controllers
         public ActionResult GetAllBooks()
         {
             JsonResult RetData = Json(listBooks);
-            RetData.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            RetData.JsonRequestBehavior = JsonRequestBehavior.AllowGet;       // Kalau ngereturn JSON, perlu ada ini.
             return RetData;
         }
 
