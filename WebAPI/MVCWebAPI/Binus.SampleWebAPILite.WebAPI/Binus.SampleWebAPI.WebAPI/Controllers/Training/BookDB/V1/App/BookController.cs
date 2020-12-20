@@ -24,10 +24,17 @@ namespace Binus.SampleWebAPI.WebAPI.Controllers.Training.BookDB.V1.App
         [HttpGet]
         public async Task<IHttpActionResult> GetAllBook()
         {
-            return Json(new
+            var books = new List<BookModel>()
             {
-                Test = "Hello World"
-            });
+                new BookModel
+                {
+                    BookID = 1,
+                    BookDesc = "Lorem ipsum dolor sit maet",
+                    BookName = "Sang Pendekar",
+                    BookQty = 12
+                }
+            };
+            return Json(books);
         }
 
         [HttpPost]

@@ -2,6 +2,7 @@
 using Binus.SampleWebAPI.Web.Class;
 using Binus.SampleWebAPI.Web.ViewModels;
 using Binus.WebAPI.REST;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,14 @@ namespace Binus.SampleWebAPI.Web.Controllers
         
         public ActionResult Index()
         {
+
             try
             {
-                RESTResult Result = (new REST(Global.WebAPIBaseURL, "/api/Training/BookDB/V1/App/Book/GetAllBook",REST.Method.GET)).Result;
+                RestClient restClient = new RestClient(Global.WebAPIBaseURL);
+                var books = restClient.Get<List<BookModel>>(new RestRequest("/api/Training/BookDB/V1/App/Book/GetAllBook", Method.GET)).Data;
 
                 HomeViewModel hvm = new HomeViewModel();
-                hvm.Books = Result.Deserialize<List<BookModel>>();
+                hvm.Books = books;
 
 
                 return View("index",hvm);
