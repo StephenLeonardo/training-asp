@@ -12,7 +12,6 @@ using System.Web.Http;
 namespace Binus.SampleWebAPI.WebAPI.Controllers.Training.BookDB.V1.App
 {
     [ApiVersion("1.0")]
-    [Authorize]
     public class BookController : ApiController
     {
         private readonly IBookService _BookService;
@@ -25,9 +24,10 @@ namespace Binus.SampleWebAPI.WebAPI.Controllers.Training.BookDB.V1.App
         [HttpGet]
         public async Task<IHttpActionResult> GetAllBook()
         {
-            List<BookModel> ListBook = (await _BookService.GetAllBook());
-
-            return Json(ListBook);
+            return Json(new
+            {
+                Test = "Hello World"
+            });
         }
 
         [HttpPost]
