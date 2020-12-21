@@ -19,6 +19,7 @@ namespace Binus.SampleWebAPI.Web.Controllers
 
             try
             {
+                // https://restsharp.dev/getting-started/getting-started.html#basic-usage
                 RestClient restClient = new RestClient(Global.WebAPIBaseURL);
                 var books = restClient.Get<List<BookModel>>(new RestRequest("/api/Training/BookDB/V1/App/Book/GetAllBook", Method.GET)).Data;
 
