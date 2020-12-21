@@ -16,5 +16,6 @@ namespace Binus.SampleWebAPI.Data.Repositories.Training.BookDB.MSSQL.App
         public BookRepository(BookDBMSSQLIDBFactory DBFactory) : base(DBFactory)
         {
         }
+
     }
 }

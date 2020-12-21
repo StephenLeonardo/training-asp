@@ -22,7 +22,7 @@ namespace Binus.SampleWebAPI.WebAPI.Controllers.Training.BookDB.V1.App
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> GetAllBook()
+        public IHttpActionResult GetAllBook()
         {
             var books = new List<BookModel>()
             {
@@ -38,41 +38,41 @@ namespace Binus.SampleWebAPI.WebAPI.Controllers.Training.BookDB.V1.App
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> InsertBook(string BookName, string BookDesc, int BookQty)
+        public IHttpActionResult InsertBook(string BookName, string BookDesc, int BookQty)
         {
-            ExecuteResult Result = (await _BookService.InsertBook(BookName, BookDesc, BookQty));
+            ExecuteResult Result = _BookService.InsertBook(BookName, BookDesc, BookQty);
 
             return Json(Result);
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> InsertBookWithModel(BookModel Model)
+        public IHttpActionResult InsertBookWithModel(BookModel Model)
         {
-            ExecuteResult Result = (await _BookService.InsertBookWithModel(Model));
+            ExecuteResult Result = _BookService.InsertBookWithModel(Model);
 
             return Json(Result);
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> GetOneBook(int BookID)
+        public IHttpActionResult GetOneBook(int BookID)
         {
-            BookModel Model = (await _BookService.GetOneBook(BookID));
+            BookModel Model = _BookService.GetOneBook(BookID);
 
             return Json(Model);
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> DeleteBook(BookModel Model)
+        public IHttpActionResult DeleteBook(BookModel Model)
         {
-            ExecuteResult Result = (await _BookService.DeleteBook(Model));
+            ExecuteResult Result = _BookService.DeleteBook(Model);
 
             return Json(Result);
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> UpdateBook(BookModel Model)
+        public IHttpActionResult UpdateBook(BookModel Model)
         {
-            ExecuteResult Result = (await _BookService.UpdateBook(Model));
+            ExecuteResult Result = _BookService.UpdateBook(Model);
 
             return Json(Result);
         }

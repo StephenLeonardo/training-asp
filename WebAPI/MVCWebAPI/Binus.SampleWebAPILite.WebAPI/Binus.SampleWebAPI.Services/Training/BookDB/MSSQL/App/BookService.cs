@@ -12,12 +12,12 @@ namespace Binus.SampleWebAPI.Services.Training.BookDB.MSSQL.App
 {
     public interface IBookService
     {
-        Task<List<BookModel>> GetAllBook();
-        Task<ExecuteResult> InsertBook(string BookName, string BookDesc, int BookQty);
-        Task<ExecuteResult> InsertBookWithModel(BookModel Model);
-        Task<BookModel> GetOneBook(int BookID);
-        Task<ExecuteResult> DeleteBook(BookModel Model);
-        Task<ExecuteResult> UpdateBook(BookModel Model);
+        List<BookModel> GetAllBook();
+        ExecuteResult InsertBook(string BookName, string BookDesc, int BookQty);
+        ExecuteResult InsertBookWithModel(BookModel Model);
+        BookModel GetOneBook(int BookID);
+        ExecuteResult DeleteBook(BookModel Model);
+        ExecuteResult UpdateBook(BookModel Model);
     }
 
     public class BookService : IBookService
@@ -29,7 +29,7 @@ namespace Binus.SampleWebAPI.Services.Training.BookDB.MSSQL.App
             this._BookRepository = _BookRepository;
         }
 
-        public async Task<ExecuteResult> DeleteBook(BookModel Model)
+        public ExecuteResult DeleteBook(BookModel Model)
         {
             var Param = new SqlParameter[]
             {
@@ -43,31 +43,31 @@ namespace Binus.SampleWebAPI.Services.Training.BookDB.MSSQL.App
                 SQLParam = Param
             });
 
-            ExecuteResult Result = (await _BookRepository.ExecMultipleSPWithTransactionAsync(Data));
+            ExecuteResult Result = _BookRepository.ExecMultipleSPWithTransaction(Data);
 
             return Result;
         }
 
-        public async Task<List<BookModel>> GetAllBook()
+        public List<BookModel> GetAllBook()
         {
-            List<BookModel> ListBook = (await _BookRepository.ExecSPToListAsync("bn_BookDB_GetAllbook")).ToList();
+            List<BookModel> ListBook = _BookRepository.ExecSPToList("bn_BookDB_GetAllbook").ToList();
 
             return ListBook;
         }
 
-        public async Task<BookModel> GetOneBook(int BookID)
+        public BookModel GetOneBook(int BookID)
         {
             var Param = new SqlParameter[]
             {
                 new SqlParameter("@BookID", BookID)
             };
 
-            BookModel Model = (await _BookRepository.ExecSPToSingleAsync("bn_BookDB_GetOneBook @BookID", Param));
+            BookModel Model = _BookRepository.ExecSPToSingle("bn_BookDB_GetOneBook @BookID", Param);
 
             return Model;
         }
 
-        public async Task<ExecuteResult> InsertBook(string BookName, string BookDesc, int BookQty)
+        public ExecuteResult InsertBook(string BookName, string BookDesc, int BookQty)
         {
             var Param = new SqlParameter[]
             {
@@ -83,12 +83,12 @@ namespace Binus.SampleWebAPI.Services.Training.BookDB.MSSQL.App
                 SQLParam = Param
             });
 
-            ExecuteResult Result = (await _BookRepository.ExecMultipleSPWithTransactionAsync(Data));
+            ExecuteResult Result = _BookRepository.ExecMultipleSPWithTransaction(Data);
 
             return Result;
         }
 
-        public async Task<ExecuteResult> InsertBookWithModel(BookModel Model)
+        public ExecuteResult InsertBookWithModel(BookModel Model)
         {
             var Param = new SqlParameter[]
             {
@@ -104,12 +104,12 @@ namespace Binus.SampleWebAPI.Services.Training.BookDB.MSSQL.App
                 SQLParam = Param
             });
 
-            ExecuteResult Result = (await _BookRepository.ExecMultipleSPWithTransactionAsync(Data));
+            ExecuteResult Result = _BookRepository.ExecMultipleSPWithTransaction(Data);
 
             return Result;
         }
 
-        public async Task<ExecuteResult> UpdateBook(BookModel Model)
+        public ExecuteResult UpdateBook(BookModel Model)
         {
             var Param = new SqlParameter[]
             {
@@ -126,7 +126,7 @@ namespace Binus.SampleWebAPI.Services.Training.BookDB.MSSQL.App
                 SQLParam = Param
             });
 
-            ExecuteResult Result = (await _BookRepository.ExecMultipleSPWithTransactionAsync(Data));
+            ExecuteResult Result = _BookRepository.ExecMultipleSPWithTransaction(Data);
 
             return Result;
         }
