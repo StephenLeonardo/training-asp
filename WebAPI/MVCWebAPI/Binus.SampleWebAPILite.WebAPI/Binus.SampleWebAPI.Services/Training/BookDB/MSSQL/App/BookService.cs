@@ -13,6 +13,7 @@ namespace Binus.SampleWebAPI.Services.Training.BookDB.MSSQL.App
     public interface IBookService
     {
         List<BookModel> GetAllBook();
+        List<BookModel> GetAllBookWithSP();
         ExecuteResult InsertBook(string BookName, string BookDesc, int BookQty);
         ExecuteResult InsertBookWithModel(BookModel Model);
         BookModel GetOneBook(int BookID);
@@ -50,9 +51,12 @@ namespace Binus.SampleWebAPI.Services.Training.BookDB.MSSQL.App
 
         public List<BookModel> GetAllBook()
         {
-            List<BookModel> ListBook = _BookRepository.ExecSPToList("bn_BookDB_GetAllbook").ToList();
+            return _BookRepository.GetBooks();
+        }
 
-            return ListBook;
+        public List<BookModel> GetAllBookWithSP()
+        {
+            return _BookRepository.GetBooksWithSP();
         }
 
         public BookModel GetOneBook(int BookID)
