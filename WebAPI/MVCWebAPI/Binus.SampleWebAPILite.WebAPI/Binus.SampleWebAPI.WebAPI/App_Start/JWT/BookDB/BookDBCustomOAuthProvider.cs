@@ -27,7 +27,7 @@ namespace Binus.SampleWebAPI.WebAPI.App_Start.JWT.BookDB
                 };
 
                 var User = Context.OwinContext.Get<BookDBMSSQLDBContext>().Database
-                    .SqlQuery<UserModel>("bn_BookDB_GetUser @Username, @Password", Param)
+                    .SqlQuery<UserModel>("SELECT UserID, UserName, Password, Name FROM MsUser WHERE UserName=@Username AND Password=@Password", Param)
                     .FirstOrDefault();
 
                 if (User != null)
