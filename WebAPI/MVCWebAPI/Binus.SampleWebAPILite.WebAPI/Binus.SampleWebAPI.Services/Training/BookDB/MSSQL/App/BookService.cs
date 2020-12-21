@@ -18,6 +18,7 @@ namespace Binus.SampleWebAPI.Services.Training.BookDB.MSSQL.App
         BookModel GetOneBook(int BookID);
         ExecuteResult DeleteBook(BookModel Model);
         ExecuteResult UpdateBook(BookModel Model);
+        List<BookModel> GetBooks();
     }
 
     public class BookService : IBookService
@@ -29,6 +30,11 @@ namespace Binus.SampleWebAPI.Services.Training.BookDB.MSSQL.App
             this._BookRepository = _BookRepository;
         }
 
+        public List<BookModel> GetBooks()
+        {
+            List<BookModel> bookModels = _BookRepository.ExecSPToList("bn_BookDB_GetAllbook").ToList();
+            return bookModels;
+        }
         public ExecuteResult DeleteBook(BookModel Model)
         {
             var Param = new SqlParameter[]
@@ -75,6 +81,8 @@ namespace Binus.SampleWebAPI.Services.Training.BookDB.MSSQL.App
                 new SqlParameter("@BookDesc", BookDesc),
                 new SqlParameter("@BookQty", BookQty)
             };
+
+            
 
             List<StoredProcedure> Data = new List<StoredProcedure>();
             Data.Add(new StoredProcedure

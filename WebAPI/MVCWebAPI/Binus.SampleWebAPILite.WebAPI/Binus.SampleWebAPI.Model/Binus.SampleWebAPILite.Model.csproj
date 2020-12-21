@@ -74,6 +74,7 @@
     <Compile Include="Base\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Training\BookDB\MSSQL\App\BookModel.cs" />
+    <Compile Include="Training\BookDB\MSSQL\App\MovieModel.cs" />
     <Compile Include="Training\BookDB\MSSQL\User\UserModel.cs" />
   </ItemGroup>
   <ItemGroup />

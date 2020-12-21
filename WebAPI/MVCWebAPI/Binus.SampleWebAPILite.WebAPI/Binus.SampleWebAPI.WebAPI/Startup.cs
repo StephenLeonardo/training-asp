@@ -30,9 +30,9 @@ namespace Binus.SampleWebAPI.WebAPI
     {
         public void Configuration(IAppBuilder Builder)
         {
-            
+
             ConfigureOAuth(Builder);
-       
+
             var Configuration = new HttpConfiguration();
             var HTTPServer = new HttpServer(Configuration);
             #region Custom Routing and WebAPI versionong

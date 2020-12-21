@@ -4,6 +4,7 @@
 
         CleanForm();
         let button = $(event.relatedTarget)
+        console.log(button);
         let BookID = button.data('id')
         let Type = button.data('type')
         let modal = $(this)
@@ -74,7 +75,7 @@ function Borrow(ID) {
     let confirmBorrow = confirm("Are you sure you want to borrow this book?");
     if (confirmBorrow) {
         $.ajax({
-            type="POST",
+            type:"POST",
             url: Address + "/Book/Borrow",
             data: "BookID=" + ID,
             success: function (Data) {

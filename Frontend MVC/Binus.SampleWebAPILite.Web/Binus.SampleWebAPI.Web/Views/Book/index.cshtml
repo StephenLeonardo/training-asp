@@ -39,7 +39,7 @@
     @using (Ajax.BeginForm("InsertBook", "Book", new AjaxOptions
     {
         HttpMethod = "POST",
-        OnSuccess = "LoadResult(data)"
+        OnSuccess = "LoadResult(data)",
     }, new { id = "form" }))
     {
         @Html.AntiForgeryToken()

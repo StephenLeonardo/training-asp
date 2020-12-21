@@ -37,6 +37,12 @@ namespace Binus.SampleWebAPI.WebAPI.Controllers.Training.BookDB.V1.App
             return Json(books);
         }
 
+        [HttpGet]
+        public IHttpActionResult GetAllBooks()
+        {
+            List<BookModel> Result = _BookService.GetBooks();
+            return Json(Result);
+        }
         [HttpPost]
         public IHttpActionResult InsertBook(string BookName, string BookDesc, int BookQty)
         {

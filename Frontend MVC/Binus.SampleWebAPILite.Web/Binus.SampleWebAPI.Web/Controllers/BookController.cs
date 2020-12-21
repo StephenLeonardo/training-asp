@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Text.Json;
 
 namespace Binus.SampleWebAPI.Web.Controllers
 {
@@ -16,16 +17,21 @@ namespace Binus.SampleWebAPI.Web.Controllers
         
         public ActionResult Index()
         {
+            JsonResult RetData = new JsonResult();
 
             try
             {
-                // https://restsharp.dev/getting-started/getting-started.html#basic-usage
-                RestClient restClient = new RestClient(Global.WebAPIBaseURL);
-                var books = restClient.Get<List<BookModel>>(new RestRequest("/api/Training/BookDB/V1/App/Book/GetAllBook", Method.GET)).Data;
 
                 HomeViewModel hvm = new HomeViewModel();
-                hvm.Books = books;
-
+                RESTResult Result = (new REST(Global.WebAPIBaseURL, "/api/Training/BookDB/V1/App/Book/GetAllBooks", REST.Method.GET, REST.NeedOAuth.False)).Result;
+                if (Result.Success)
+                {
+                    hvm.Books = Result.Deserialize<List<BookModel>>();
+                }
+                else
+                {
+                    hvm.Books = new List<BookModel>();
+                }
 
                 return View("index",hvm);
             }
@@ -41,7 +47,7 @@ namespace Binus.SampleWebAPI.Web.Controllers
             {
                 if(model.BookID != 0)
                 {
-                    RESTResult Result = (new REST(Global.WebAPIBaseURL, "/api/Training/BookDB/V1/App/Book/UpdateBook", REST.Method.POST, model)).Result;
+                    RESTResult Result = (new REST(Global.WebAPIBaseURL, "/api/Training/BookDB/V1/App/Book/UpdateBook", REST.Method.POST, REST.NeedOAuth.False, model)).Result;
 
                     if (Result.Success)
                     {
@@ -62,8 +68,12 @@ namespace Binus.SampleWebAPI.Web.Controllers
                 }
                 else
                 {
-                    RESTResult Result = (new REST(Global.WebAPIBaseURL, "/api/Training/BookDB/V1/App/Book/InsertBookWithModel",REST.Method.POST,model)).Result;
-
+                    RESTResult Result = (new REST(
+                        BaseURL: Global.WebAPIBaseURL,
+                        URL: "api/Training/BookDB/V1/App/Book/InsertBookWithModel",
+                        Method: REST.Method.POST,
+                        NeedOAuth: REST.NeedOAuth.False,
+                        Data: model)).Result;
                     if (Result.Success)
                     {
                         RetData = Json(new {
@@ -96,7 +106,7 @@ namespace Binus.SampleWebAPI.Web.Controllers
             JsonResult retData = new JsonResult();
             try
             {
-                RESTResult Result = (new REST(Global.WebAPIBaseURL, "/api/Training/BookDB/V1/App/Book/DeleteBook",REST.Method.POST,Model)).Result;
+                RESTResult Result = (new REST(Global.WebAPIBaseURL, "/api/Training/BookDB/V1/App/Book/DeleteBook",REST.Method.POST, REST.NeedOAuth.False, Model)).Result;
 
                 if (Result.Success)
                 {
@@ -130,7 +140,10 @@ namespace Binus.SampleWebAPI.Web.Controllers
             JsonResult retData = new JsonResult();
             try
             {
-                RESTResult Result = (new REST(Global.WebAPIBaseURL,"/api/Training/BookDB/V1/App/Book/GetOneBook?BookID="+model.BookID,REST.Method.GET)).Result;
+                RESTResult Result = (new REST(Global.WebAPIBaseURL,
+                    "/api/Training/BookDB/V1/App/Book/GetOneBook?BookID="+model.BookID,
+                    REST.Method.GET, 
+                    REST.NeedOAuth.False)).Result;
                 
                 if (Result.Success)
                 {

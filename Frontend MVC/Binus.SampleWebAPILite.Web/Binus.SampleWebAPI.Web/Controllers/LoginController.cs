@@ -18,8 +18,8 @@ namespace Binus.SampleWebAPI.Web.Controllers
             JsonResult ReturnData = new JsonResult();
             try
             {
-                RESTResult Result = (new REST(Global.WebAPIBaseURL, "/api/Training/BookDB/V1/App/Login/GetLoginData",REST.Method.POST,Global.OAuthBookDBEndPoint,model)).Result;
-
+                var x = (new REST(Global.WebAPIBaseURL, "/api/Training/BookDB/V1/App/Login/GetLoginData", REST.Method.POST, model));
+                var Result = x.Result;
                 if (Result.Success)
                 {
                     AuthUser User = Result.Deserialize<AuthUser>();
